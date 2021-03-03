@@ -36,8 +36,13 @@ public class ItemWorld : MonoBehaviour
         return item;
     }
 
-    public void DestroySelf()
+    public void disableSelf()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+    }
+
+    public void enableSelf()
+    {
+        gameObject.SetActive(true);
     }
 }

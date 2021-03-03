@@ -32,6 +32,8 @@ public class CharacterController : MonoBehaviour
     
     private ItemWorld itemWorld = null;
 
+    public List<ItemWorld> gotItens;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -109,7 +111,10 @@ public class CharacterController : MonoBehaviour
         {
             inventory.AddItem(itemWorld.GetItem());
 
-            itemWorld.DestroySelf();
+            gotItens.Add(itemWorld);
+
+            itemWorld.disableSelf();
+            //itemWorld.GetComponent<GameObject>().SetActive(false);
 
             isColliding = false;
         }
@@ -117,6 +122,7 @@ public class CharacterController : MonoBehaviour
 
     public void SavePlayer()
     {
+        gotItens.Clear();
         Saves.SavePlayer(this, inventory);
     }
 
@@ -133,5 +139,9 @@ public class CharacterController : MonoBehaviour
         transform.position = position;
 
         inventory.itemList = data.itemList;
+
+        for(int i = 0; i < gotItens.Count; i++) gotItens[i].enableSelf();
+
+        uiInventory.RefreshInventoryItems();
     }
 }
